@@ -160,7 +160,7 @@ rcf/
 ApplicationInsights.config
 
 # misc
-/.angular/cache
+/Clienqtapp/.angular
 
 # Windows Store app package directory
 AppPackages/
