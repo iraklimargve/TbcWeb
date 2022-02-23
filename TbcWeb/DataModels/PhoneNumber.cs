@@ -16,7 +16,7 @@ namespace TbcWeb.DataModels
         [Required(ErrorMessage = "Required")]
         [MinLength(4)]
         [MaxLength(50)]
-        public string? Number { get; set; }
+        public string Number { get; set; }
         
     }
 }
