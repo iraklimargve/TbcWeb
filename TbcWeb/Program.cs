@@ -1,9 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using TbcWeb.DataModels;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddControllers();
+builder.Services.AddDbContextPool<AppDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnectionString")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
