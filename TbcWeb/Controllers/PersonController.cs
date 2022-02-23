@@ -45,7 +45,7 @@ namespace TbcWeb.Controllers
             {
                 Id = person.Id,
                 Name = person.Name,
-                lastName = person.LastName,
+                Lastname = person.LastName,
                 IdNumber = person.IdNumber,
                 Gender = person.Gender,
                 BirthDate = person.BirthDate,
@@ -60,6 +60,8 @@ namespace TbcWeb.Controllers
                     Number = phones.Number,
                     PhoneNumberType = phones.PhoneNumberType
                 });
+
+                
             }
 
             foreach (var relative in person.Relatives)
@@ -74,6 +76,8 @@ namespace TbcWeb.Controllers
                     RelativeType = relative.RelativeType
                 });
             }
+            result.PhoneNumbers.OrderBy(x => x.PhoneNumberType);
+            result.Relatives.OrderBy(x => x.RelativeType);
 
             return result;
         }
@@ -92,8 +96,13 @@ namespace TbcWeb.Controllers
                 if (city == null)
                     return Json(new { status = 1, message = "Invalid City" });
 
+                var str = validatePersonModel(personModel);
+                if (str != string.Empty)
+                    return Json(new { status = 1, message = str });
+
+
                 person.Name = personModel.Name;
-                person.LastName = personModel.lastName;
+                person.LastName = personModel.Lastname;
                 person.IdNumber = personModel.IdNumber;
                 person.Gender = personModel.Gender;
                 person.BirthDate = personModel.BirthDate;
@@ -107,8 +116,20 @@ namespace TbcWeb.Controllers
             {
                 return Json(new { status = 2, message = ex.Message });
             }
+        }
 
-            
+        private string validatePersonModel(PersonModel personModel)
+        {
+            if (personModel.Name.Length > 50 || personModel.Name.Length < 2)
+                return "Name length should be between 2 and 50";
+            if (personModel.Lastname.Length > 50 || personModel.Name.Length < 2)
+                return "Lastname length should be between 2 and 50";
+            if (personModel.IdNumber.Length != 11)
+                return "IdNumber length should be 11";
+            if (DateTime.Compare(personModel.BirthDate.AddYears(18), DateTime.Now) > 0)
+                return "person must be at least 18";
+
+            return string.Empty;
         }
 
         [HttpPost]
