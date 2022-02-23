@@ -159,6 +159,9 @@ rcf/
 # Microsoft Azure ApplicationInsights config file
 ApplicationInsights.config
 
+# misc
+/.angular/cache
+
 # Windows Store app package directory
 AppPackages/
 BundleArtifacts/

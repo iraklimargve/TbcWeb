@@ -13,6 +13,7 @@ namespace TbcWeb.Controllers
         {
             var result = new List<PersonListModel>();
             var persons = db.Persons.Include(x => x.City).Include(x => x.PhoneNumbers).Include(x => x.Relatives).ToList();
+
             foreach (var person in persons)
             {
                 result.Add(new PersonListModel
@@ -37,6 +38,8 @@ namespace TbcWeb.Controllers
         {
             
             var person = db.Persons.Where(x => x.Id == id).Include(x => x.City).Include(x => x.PhoneNumbers).Include(x => x.Relatives).FirstOrDefault();
+            if (person == null)
+                return new PersonModel();
 
             var result = new PersonModel
             {
